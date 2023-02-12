@@ -33,7 +33,7 @@ const handleLoan = () => {
       balance += Number(loan);
 
       //Injected elements (Displaying values in the html page)
-      balanceElement.innerText = `Balance: ${balance} 💰`;
+      balanceElement.innerText = `${balance} 💰`;
       loanElement.innerText = `${loan} 🤑`;
 
       //Set to false when you satisfy the conditions in the function handlePayLoan
@@ -71,7 +71,7 @@ const handlePayLoan = () => {
       loan -= Number(payment);
 
       //Injected elements (Displaying values in the html page)
-      balanceElement.innerText = `Balance: ${balance} 💰`;
+      balanceElement.innerText = `${balance} 💰`;
       if (loan <= 0) {
         loanElement.innerText = `0 🦇`;
       } else {
