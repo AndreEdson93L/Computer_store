@@ -7,6 +7,7 @@ const specElement = document.getElementById("spec");
 const laptopTitle = document.getElementById("laptop-title");
 const laptopImage = document.getElementById("laptop-image");
 const laptopPrice = document.getElementById("laptopt-price");
+const laptopDescription = document.getElementById("laptop-description");
 
 //Buttons 💸
 const buyLaptop = document.getElementById("buy-laptop");
@@ -47,6 +48,11 @@ const addComputersToMenu = (computers) => {
   //Setting the price of the first element that the page will display.
   //In my project I choose to use the emoji currency. If people buy nft why the shouldn't pay with emojis?
   laptopPrice.innerText = computers[0].price + " 💸";
+  //Setting the description of the first element that the page will display.
+  laptopDescription.innerText = computers[0].description;
+  //Setting the first element specin the drop vox menu
+  const lineBreak = document.createElement('br');
+  specElement.innerHTML = computers[0].specs.join(lineBreak.outerHTML);
 };
 
 const getUpdateValueLaptop = () => {
@@ -95,7 +101,7 @@ const addLaptopToMenu = (laptop) => {
   const laptopElement = document.createElement("option");
   laptopElement.appendChild(document.createTextNode(laptop.title));
   computersElement.appendChild(laptopElement);
-  specElement.innerText = laptop.specs;
+  //specElement.innerText = laptop.specs.join(document.createElement("br"));
 };
 
 computersElement.addEventListener("change", (event) => {
@@ -104,7 +110,9 @@ computersElement.addEventListener("change", (event) => {
   );
   //Every time we change computer in the drop box, it will automatically update all the data {selectedLaptop}
   laptopTitle.innerText = selectedLaptop.title;
-  specElement.innerText = selectedLaptop.specs;
+  const lineBreak = document.createElement("br");
+  specElement.innerHTML = selectedLaptop.specs.join(lineBreak.outerHTML);
+  laptopDescription.innerText = selectedLaptop.description;
   laptopPrice.innerText = selectedLaptop.price + " 💸";
   laptopImage.setAttribute(
     "src",

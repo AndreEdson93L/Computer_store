@@ -7,43 +7,70 @@
     <title>Computer Store</title>
     <link rel="stylesheet" href="style.css" />
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
     />
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
+    <!--Computer store-->
+    <nav class="navbar text-bg-dark p-3">
+      <div class="container-fluid">
+        <h1>Computer store</h1>
+      </div>
+    </nav>
     <!--Bank-->
-    <h3>Bank Account</h3>
-    <span>Balance: </span>
-    <span id="balance"></span><br />
-    <span>Loan: </span>
-    <span id="loan"></span><br />
-    <button id="get-loan">Get a loan</button>
-    <button id="pay-loan">Repay loan</button>
-
+    <div class="card" style="width: 18rem">
+      <h3><strong>Bank Account</strong></h3>
+      <div class="card-body">
+        <span>Balance: </span>
+        <span id="balance"></span><br />
+        <span>Loan: </span>
+        <span id="loan"></span><br />
+        <button id="get-loan" type="button" class="btn btn-success">
+          Get a loan
+        </button>
+        <button id="pay-loan" type="button" class="btn btn-secondary">
+          Repay loan
+        </button>
+      </div>
+    </div>
     <!--Work-->
-    <h3>Work</h3>
-    <span>Pay: </span>
-    <span id="salary"></span><br />
-    <button id="get-bank">Bank</button>
-    <button id="get-work">Work</button>
+    <div class="card" style="width: 18rem">
+      <h3><strong>Work</strong></h3>
+      <div class="card-body">
+        <span>Pay: </span>
+        <span id="salary"></span><br />
+        <button id="get-bank" type="button" class="btn btn-warning">
+          Bank
+        </button>
+        <button id="get-work" type="button" class="btn btn-primary">
+          Work
+        </button>
+      </div>
+    </div>
 
     <!--Laptops-->
-    <h3>Laptops</h3>
-    <select name="laptops" id="laptops"></select
-    ><br />
-    <span><strong>Features</strong></span
-    ><br />
-    <span id="spec"></span>
+    <div class="card" style="width: 18rem">
+      <h3><strong>Laptops</strong></h3>
+      <div class="card-body">
+        <select name="laptops" id="laptops"></select><br/>
+        <span><strong>Features</strong></span><br/>
+        <span id="spec"></span>
+      </div>
+    </div>
 
     <!--Laptop-->
     <h3 name="laptop-title" id="laptop-title"></h3>
-    <img id="laptop-image" src="" alt="Laptop Image" /><br />
-    <span id="spec"></span><br />
-    <span id="laptopt-price"></span><br />
+    <img id="laptop-image" src="" alt="Laptop Image"/><br/>
+    <span id="laptop-description"></span><br/>
+    <span id="laptopt-price"></span><br/>
     <button id="buy-laptop">Buy now</button>
 
     <!--Bank script-->
