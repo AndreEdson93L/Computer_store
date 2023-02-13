@@ -66,6 +66,17 @@ const handlePayLoan = () => {
   if (!isNaN(payment)) {
     balance = getUpdateValueBalance();
     loan = getUpdateValueLoan();
+
+    //if you don't have enough money in your balance to pay your loan, it will trigger this condition.
+    if (!(balance >= payment)) {
+      alert(
+        "You don't have enough money in your balance. Please get a job and work!"
+      );
+      let url = "https://sayingimages.com/wp-content/uploads/what-are-you-doing-get-back-to-work-meme.png.webp";
+      memePopup(url);
+      return;
+    }
+
     if (payment <= loan) {
       balance -= Number(payment);
       loan -= Number(payment);

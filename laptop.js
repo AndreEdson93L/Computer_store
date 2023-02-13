@@ -51,7 +51,7 @@ const addComputersToMenu = (computers) => {
   //Setting the description of the first element that the page will display.
   laptopDescription.innerText = computers[0].description;
   //Setting the first element specin the drop vox menu
-  const lineBreak = document.createElement('br');
+  const lineBreak = document.createElement("br");
   specElement.innerHTML = computers[0].specs.join(lineBreak.outerHTML);
 };
 
@@ -83,18 +83,23 @@ const handleLaptopPayment = () => {
     alert("Congratulations!!! You have now a new computer!");
   } else {
     alert("You don't have enough money!");
-    let leftValue = Math.floor(Math.random() * screen.width);
-    let rightValue = Math.floor(Math.random() * screen.height);
-    let popup = window.open(
-      "https://th.bing.com/th/id/R.475f0e4fb521271c0c384f6c25cb8ddc?rik=8cC6ydVvjvD%2fAg&riu=http%3a%2f%2fwww.relatably.com%2fm%2fimg%2fno-money-memes%2fwhat-no-money.jpg&ehk=cSJmrXlEJyJKCcMYrJgNyTkCoreATqd4Qmp9G%2bCIeaA%3d&risl=&pid=ImgRaw&r=0",
-      "Pop-up Image",
-      "width=300, height=300, left=" + leftValue + ", top=" + rightValue
-    );
-    // Close each window after 3 seconds
-    setTimeout(function () {
-      popup.close();
-    }, 3000);
+    let url = "https://th.bing.com/th/id/R.475f0e4fb521271c0c384f6c25cb8ddc?rik=8cC6ydVvjvD%2fAg&riu=http%3a%2f%2fwww.relatably.com%2fm%2fimg%2fno-money-memes%2fwhat-no-money.jpg&ehk=cSJmrXlEJyJKCcMYrJgNyTkCoreATqd4Qmp9G%2bCIeaA%3d&risl=&pid=ImgRaw&r=0";  
+    memePopup(url);
   }
+};
+
+const memePopup = (urlMeme) => {
+  let leftValue = Math.floor(Math.random() * screen.width);
+  let rightValue = Math.floor(Math.random() * screen.height);
+  let popup = window.open(
+    urlMeme,
+    "Pop-up Image",
+    "width=300, height=300, left=" + leftValue + ", top=" + rightValue
+  );
+  // Close each window after 3 seconds
+  setTimeout(function () {
+    popup.close();
+  }, 3000);
 };
 
 const addLaptopToMenu = (laptop) => {
