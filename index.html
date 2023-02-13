@@ -12,6 +12,11 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://freepngimg.com/download/batman/20013-8-batman-transparent.png"
+    />
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
@@ -19,59 +24,100 @@
     ></script>
   </head>
   <body>
-    <!--Computer store-->
+    <!--Computer store navbar-->
     <nav class="navbar text-bg-dark p-3">
       <div class="container-fluid">
-        <h1>Computer store</h1>
+        <h1 class="fw-bold">Computer store</h1>
       </div>
     </nav>
-    <!--Bank-->
-    <div class="card" style="width: 18rem">
-      <h3><strong>Bank Account</strong></h3>
-      <div class="card-body">
-        <span>Balance: </span>
-        <span id="balance"></span><br />
-        <span>Loan: </span>
-        <span id="loan"></span><br />
-        <button id="get-loan" type="button" class="btn btn-success">
-          Get a loan
-        </button>
-        <button id="pay-loan" type="button" class="btn btn-secondary">
-          Repay loan
-        </button>
-      </div>
-    </div>
-    <!--Work-->
-    <div class="card" style="width: 18rem">
-      <h3><strong>Work</strong></h3>
-      <div class="card-body">
-        <span>Pay: </span>
-        <span id="salary"></span><br />
-        <button id="get-bank" type="button" class="btn btn-warning">
-          Bank
-        </button>
-        <button id="get-work" type="button" class="btn btn-primary">
-          Work
-        </button>
-      </div>
-    </div>
+    <div class="container d-flex justify-content-between">
+      <div class="col-lg-12 col-lg-6 col-lg-4">
+        <div class="row mx-3">
+          <div class="col my-3">
+            <!-- Bank account section -->
+            <div class="card bg-light p-3" style="width: 18rem">
+              <h3 class="fw-bold">Bank Account</h3>
+              <div class="card-body">
+                <span>Balance: </span>
+                <span id="balance"></span><br />
+                <span>Loan: </span>
+                <span id="loan"></span><br />
+                <button id="get-loan" type="button" class="btn btn-success">
+                  Get a loan
+                </button>
+                <button id="pay-loan" type="button" class="btn btn-secondary">
+                  Repay loan
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col my-3">
+            <!-- Work section -->
+            <div class="card bg-light p-3" style="width: 18rem">
+              <h3 class="fw-bold">Work</h3>
+              <div class="card-body">
+                <span>Pay: </span>
+                <span id="salary"></span><br />
+                <button id="get-bank" type="button" class="btn btn-warning">
+                  Bank
+                </button>
+                <button id="get-work" type="button" class="btn btn-primary">
+                  Work
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col my-3">
+            <!-- Laptops section -->
+            <div class="card bg-light p-3" style="width: 18rem">
+              <h3 class="fw-bold">Laptops</h3>
+              <div class="card-body">
+                <select name="laptops" id="laptops"></select
+                ><br />
+                <span class="fw-bold">Features</span><br />
+                <span id="spec"></span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <!--Laptops-->
-    <div class="card" style="width: 18rem">
-      <h3><strong>Laptops</strong></h3>
-      <div class="card-body">
-        <select name="laptops" id="laptops"></select><br/>
-        <span><strong>Features</strong></span><br/>
-        <span id="spec"></span>
+        <!--Laptop-->
+        <div class="card bg-light p-3">
+          <div class="row mx-3">
+            <div class="col my-3">
+              <!-- Image section -->
+              <img
+                id="laptop-image"
+                src=""
+                alt="Laptop Image"
+                class="rounded float-start img-thumbnail"
+                style="width: 18rem"
+              />
+            </div>
+            <div class="col my-3">
+              <!-- Title, Description section -->
+              <div class="row">
+                <h2 name="laptop-title" id="laptop-title" class="fw-bold"></h2>
+              </div>
+              <div class="row">
+                <span id="laptop-description"></span>
+              </div>
+            </div>
+            <div class="col my-3">
+              <!-- Price, Button section -->
+              <div class="row">
+                <h2 id="laptopt-price" class="fw-bold"></h2>
+              </div>
+              <div class="row">
+                <button id="buy-laptop" class="btn btn-info fw-bold w-100">
+                  Buy now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!--Laptop-->
-    <h3 name="laptop-title" id="laptop-title"></h3>
-    <img id="laptop-image" src="" alt="Laptop Image"/><br/>
-    <span id="laptop-description"></span><br/>
-    <span id="laptopt-price"></span><br/>
-    <button id="buy-laptop">Buy now</button>
 
     <!--Bank script-->
     <script src="bank.js"></script>
