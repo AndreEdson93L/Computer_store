@@ -42,7 +42,7 @@ const setMinMaxLoanRespected = (min, max, loan) => {
   }
 
   //*conditions (using the ! operator)
-  if (!(loan <= balance * 2)) {
+  if (!(loan <= getUpdateValueBalance() * 2)) {
     alert("You can't get a loan that is greater than twice your current balance!");
     return false;
   } else {
