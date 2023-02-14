@@ -1,70 +1,76 @@
 //Work script
 
-//Display elements
+//#region getSalaryElement in the html page (id = "salary") => Pay: {value} in the web browser page
 const salaryElement = document.getElementById("salary");
+//#endregion
 
-//Getting values of the bank account
+//#region gettingBalanceLoanValues
 const balanceElementWork = document.getElementById("balance");
 const loanElementWork = document.getElementById("loan");
+//#endregion
 
-//Buttons
+//#region getButtonValues
 const bankTransfer = document.getElementById("get-bank");
 const salaryTransfer = document.getElementById("get-work");
+//#endregion
 
-//Variables
+//#region Variables
 let salary = 0;
+//Update UI at the first load of the page 
+salaryElement.innerText = `${salary} 🔫`;
+//#endregion
 
-//Functions
+//#region Functions
+
+//#region getUpdateValueInYourBalance from the html page.
 const getUpdateValueBalance = () => {
   //Value in Balance
-  let balanceValue = balanceElementWork.innerHTML;
+  const balanceValue = balanceElementWork.innerHTML;
+  //using a function (that uses a regex) to get the numerical values and not the emoji currency
+  const balanceArrayValue = getValueWithoutEmoji(balanceValue);
 
-  //using a regex to get the numerical values and not the emoji currency
-  let balanceArrayValue = balanceValue.match(/\d+/g);
-
-  //Final variables that will get the final value after the join()
-  let balanceNumValue = 0;
-
+  //if the value is a float we will trigger the join(".") function.
   if (balanceArrayValue.length == 2) {
-    balanceNumValue = parseFloat(balanceArrayValue.join("."));
+    const balanceNumValue = parseFloat(balanceArrayValue.join("."));
     return balanceNumValue;
   } else {
-    balanceNumValue = parseFloat(balanceArrayValue[0]);
+    const balanceNumValue = parseFloat(balanceArrayValue[0]);
     return balanceNumValue;
   }
 };
+//#endregion
 
+//#region getCurrentValueInLoanFunction
 const getUpdateValueLoan = () => {
-  //Values in Loan:
-  let loanValue = loanElementWork.innerHTML;
+  //Get value in Loan:
+  const loanValue = loanElementWork.innerHTML;
 
-  //using a regex to get the numerical values and not the emoji currency
-  let loanArrayValue = loanValue.match(/\d+/g);
+  //using a function to get the numerical value and not the emoji currency (return an array of length == 1 0r length == 2)
+  const loanArrayValue = getValueWithoutEmoji(loanValue);
 
-  //Final variables that will get the final value after the join()
-  let loanNumValue = 0;
-
+  //variable that will return. If it is a float the value will be joined => join(".")
   if (loanArrayValue == 2) {
-    loanNumValue = parseFloat(loanArrayValue.join("."));
+    const loanNumValue = parseFloat(loanArrayValue.join("."));
     return loanNumValue;
   } else {
-    loanNumValue = parseFloat(loanArrayValue[0]);
+    const loanNumValue = parseFloat(loanArrayValue[0]);
     return loanNumValue;
   }
 };
+//#endregion
 
+//#region workForSalaryFunction, triggered by the button => Work
 const handleWorkForSalary = () => {
   salary += 100;
   salaryElement.innerText = `${salary} 🔫`;
 };
+//#endregion
 
+//#region transferMoneyFromYourPay to your balance, if you have an outstanding loan your salary will be deducted of the 10% (check this function => handlePayLoanPercentagePayment(salary))
 const handleBankTransfer = () => {
   if (salary > 0) {
-    const balanceNumValue = getUpdateValueBalance();
-    const loanNumValue = getUpdateValueLoan();
-
-    if (loanNumValue === 0) {
-      balanceElementWork.innerHTML = `${balanceNumValue + salary} 💰`;
+    if (getUpdateValueLoan() === 0) {
+      balanceElementWork.innerHTML = `${getUpdateValueBalance() + salary} 💰`;
       salary = 0;
       salaryElement.innerText = `${salary} 🔫`;
     } else {
@@ -74,7 +80,9 @@ const handleBankTransfer = () => {
     }
   }
 };
+//#endregion
 
+//#region deduction of the 10% of your pay if you have an oustanding loan
 const handlePayLoanPercentagePayment = (salary) => {
   const percetange = ((salary / 100) * 10).toFixed(2);
   const realSalary = ((salary / 100) * 90).toFixed(2);
@@ -86,7 +94,7 @@ const handlePayLoanPercentagePayment = (salary) => {
     balance += Number(realSalary);
 
     loanElementWork.innerText = `${loan} 🦇`;
-    balanceElementWork.innerHTML = `${balance} 💰`;
+    balanceElementWork.innerText = `${balance} 💰`;
   } else {
     //With this else we handle the last payment of the loan
     loan = 0;
@@ -94,13 +102,14 @@ const handlePayLoanPercentagePayment = (salary) => {
     outstandingLoan = false;
 
     loanElementWork.innerText = `0 🦇`;
-    balanceElementWork.innerHTML = `${balance} 💰`;
+    balanceElementWork.innerText = `${balance} 💰`;
   }
 };
+//#endregion
 
-//Injected elements (Displaying values in the html page)
-salaryElement.innerText = `${salary} 🔫`;
+//#endregion
 
-//Even listeners, connecting ours buttons to ours functions
+//#region Even listeners, connecting ours buttons to ours functions
 salaryTransfer.addEventListener("click", handleWorkForSalary);
 bankTransfer.addEventListener("click", handleBankTransfer);
+//#endregion
