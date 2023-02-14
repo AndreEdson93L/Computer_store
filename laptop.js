@@ -1,19 +1,24 @@
 //API: "https://hickory-quilled-actress.glitch.me/computers"
 //I have also in Json file file, just in case the api wouldn't work properly. => computer.json
 
-//Display elements
+//#region Display elements
 const computersElement = document.getElementById("laptops");
 const specElement = document.getElementById("spec");
 const laptopTitle = document.getElementById("laptop-title");
 const laptopImage = document.getElementById("laptop-image");
 const laptopPrice = document.getElementById("laptopt-price");
 const laptopDescription = document.getElementById("laptop-description");
+//#endregion
 
-//Buttons 💸
+//#region getButtonValue (button => BuyNow) 💸
 const buyLaptop = document.getElementById("buy-laptop");
+//#endregion
 
+//#region Global variables
 let computers = [];
+//#endregion
 
+//#region getDataFromApiFunction
 async function getData() {
   try {
     await fetch("https://hickory-quilled-actress.glitch.me/computers")
@@ -26,17 +31,31 @@ async function getData() {
 }
 
 getData();
+//#endregion
 
-//Functions
+//#region Functions Grouped in a single region
+
+//#region addLaptopToTheMenu, laptops section in the html page. We call this function inside the addComputersToMenu function.
+const addLaptopToMenu = (laptop) => {
+  const laptopElement = document.createElement("option");
+  laptopElement.appendChild(document.createTextNode(laptop.title));
+  computersElement.appendChild(laptopElement);
+};
+//#endregion
+
+//#region addingLaptopsToOurGlobalVariableFunction, global variable => let computers = [];
 const addComputersToMenu = (computers) => {
   computers.forEach((x) => addLaptopToMenu(x));
-  //We are setting the first title of the API in the section where you can buy the computer.
+  //We use this computers[0] to access the first value of the array and display in the page the first laptop in our API
   laptopTitle.innerText = computers[0].title;
+  laptopPrice.innerText = computers[0].price + " 💸";
+  laptopDescription.innerText = computers[0].description;
+
+  const lineBreak = document.createElement("br");
+  specElement.innerHTML = computers[0].specs.join(lineBreak.outerHTML);
+
   //With this workaroung I concatenate the first part of the url with the last part that identify the resource {image}.
-  laptopImage.setAttribute(
-    "src",
-    "https://hickory-quilled-actress.glitch.me/" + computers[0].image
-  );
+  laptopImage.setAttribute("src", "https://hickory-quilled-actress.glitch.me/" + computers[0].image);
   // Add an event listener to handle image loading errors and loading memes instead.
   laptopImage.onerror = function () {
     console.log("Failed to load image: ", selectedLaptop.image);
@@ -45,38 +64,62 @@ const addComputersToMenu = (computers) => {
       "http://images2.memedroid.com/images/UPLOADED54/524dde0e6668e.jpeg"
     );
   };
-  //Setting the price of the first element that the page will display.
-  //In my project I choose to use the emoji currency. If people buy nft why the shouldn't pay with emojis?
-  laptopPrice.innerText = computers[0].price + " 💸";
-  //Setting the description of the first element that the page will display.
-  laptopDescription.innerText = computers[0].description;
-  //Setting the first element specin the drop vox menu
-  const lineBreak = document.createElement("br");
-  specElement.innerHTML = computers[0].specs.join(lineBreak.outerHTML);
 };
+//#endregion
 
+//#region featuresFunction, Laptops section: every time we change laptop in the drop box menu, it will automatically update all the data.  
+computersElement.addEventListener("change", (event) => {
+  const selectedLaptop = computers.find(
+    (laptop) => laptop.title === event.target.value
+  ); 
+  //Variable we are referring to handle the changes in the drop menu => {selectedLaptop}.
+  laptopTitle.innerText = selectedLaptop.title;
+
+  //In this ways we can visualize the features (laptops section) without the comma and one below the other
+  const lineBreak = document.createElement("br");
+  specElement.innerHTML = selectedLaptop.specs.join(lineBreak.outerHTML);
+
+  laptopDescription.innerText = selectedLaptop.description;
+  laptopPrice.innerText = selectedLaptop.price + " 💸";
+  //Setting the image for the laptop
+  laptopImage.setAttribute("src", "https://hickory-quilled-actress.glitch.me/" + selectedLaptop.image);
+
+  //Add an event listener to handle image loading errors and loading a meme instead.
+  laptopImage.onerror = function () {
+    console.log("Failed to load image: ", selectedLaptop.image);
+    laptopImage.setAttribute("src", "http://images2.memedroid.com/images/UPLOADED54/524dde0e6668e.jpeg");
+  };
+});
+//#endregion
+
+//#region getValueWithoutEmojiToPerformMathFunction
+const getValueWithoutEmoji = (value) => {
+  //regex to get the numerical values and not the emoji currency.
+  return value.match(/\d+/g);
+}
+//#endregion
+
+//#region getLaptopValue, with this function we get the value of the current laptop that we are displaying.
 const getUpdateValueLaptop = () => {
   //Getting the value with the emoji.
   let laptopValueWithEmoji = laptopPrice.innerHTML;
-  //Using a regex to get the numerical values and not the emoji currency.
-  //With this regex if the number is a float it will return an array with length of two.
-  //Otherwise it will return an array of lenght one.
-  let laptopArrayValue = laptopValueWithEmoji.match(/\d+/g);
-  //Final variables that will get the final value after the join().
-  let laptopNumValue = 0;
+  let laptopArrayValue = getValueWithoutEmoji(laptopValueWithEmoji);
 
+  //Checking if the value of the laptio is an integer or a float (if it's a float value it will join("."))
   if (laptopArrayValue == 2) {
-    laptopNumValue = parseFloat(laptopArrayValue.join("."));
+    const laptopNumValue = parseFloat(laptopArrayValue.join("."));
     return laptopNumValue;
   } else {
-    laptopNumValue = parseFloat(laptopArrayValue[0]);
+    const laptopNumValue = parseFloat(laptopArrayValue[0]);
     return laptopNumValue;
   }
 };
+//#endregion
 
+//#region buyLaptopFunction, triggered by the Buy Now button
 const handleLaptopPayment = () => {
-  let balance = getUpdateValueBalance();
-  let price = getUpdateValueLaptop();
+  const balance = getUpdateValueBalance();
+  const price = getUpdateValueLaptop();
 
   if (balance >= price) {
     balanceElement.innerText = `${balance - price} 💰`;
@@ -87,52 +130,23 @@ const handleLaptopPayment = () => {
     memePopup(url);
   }
 };
+//#endregion
 
+//#region generateMemeFunction, I am happy with this function.
 const memePopup = (urlMeme) => {
+  //variables that we use to set up the position of the meme randomly
   let leftValue = Math.floor(Math.random() * screen.width);
-  let rightValue = Math.floor(Math.random() * screen.height);
-  let popup = window.open(
-    urlMeme,
-    "Pop-up Image",
-    "width=300, height=300, left=" + leftValue + ", top=" + rightValue
-  );
-  // Close each window after 3 seconds
+  let topValue = Math.floor(Math.random() * screen.height);
+  let popup = window.open(urlMeme, "Pop-up Image", "width=300, height=300, left=" + leftValue + ", top=" + topValue);
+  //function that we use to close the popup after 3 seconds
   setTimeout(function () {
     popup.close();
   }, 3000);
 };
+//#endregion
 
-const addLaptopToMenu = (laptop) => {
-  const laptopElement = document.createElement("option");
-  laptopElement.appendChild(document.createTextNode(laptop.title));
-  computersElement.appendChild(laptopElement);
-  //specElement.innerText = laptop.specs.join(document.createElement("br"));
-};
+//#endregion
 
-computersElement.addEventListener("change", (event) => {
-  const selectedLaptop = computers.find(
-    (laptop) => laptop.title === event.target.value
-  );
-  //Every time we change computer in the drop box, it will automatically update all the data {selectedLaptop}
-  laptopTitle.innerText = selectedLaptop.title;
-  const lineBreak = document.createElement("br");
-  specElement.innerHTML = selectedLaptop.specs.join(lineBreak.outerHTML);
-  laptopDescription.innerText = selectedLaptop.description;
-  laptopPrice.innerText = selectedLaptop.price + " 💸";
-  laptopImage.setAttribute(
-    "src",
-    "https://hickory-quilled-actress.glitch.me/" + selectedLaptop.image
-  );
-
-  // Add an event listener to handle image loading errors and loading memes instead.
-  laptopImage.onerror = function () {
-    console.log("Failed to load image: ", selectedLaptop.image);
-    laptopImage.setAttribute(
-      "src",
-      "http://images2.memedroid.com/images/UPLOADED54/524dde0e6668e.jpeg"
-    );
-  };
-});
-
-//Even listeners, connecting ours buttons to ours functions
+//#region Even listener, connecting the button (Buy Now) to the function handleLaptopPayment()
 buyLaptop.addEventListener("click", handleLaptopPayment);
+//#endregion
