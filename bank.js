@@ -44,6 +44,8 @@ const setMinMaxLoanRespected = (min, max, loan) => {
   //*conditions (using the ! operator)
   if (!(loan <= getUpdateValueBalance() * 2)) {
     alert("You can't get a loan that is greater than twice your current balance!");
+    //console.log(loan); I am guilty that I have used console.log() to debug.
+    //console.log(getUpdateValueBalance() * 2);
     return false;
   } else {
     return true;

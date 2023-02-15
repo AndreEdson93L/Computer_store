@@ -43,52 +43,55 @@ const addLaptopToMenu = (laptop) => {
 };
 //#endregion
 
-//#region addingLaptopsToOurGlobalVariableFunction, global variable => let computers = [];
-const addComputersToMenu = (computers) => {
-  computers.forEach((x) => addLaptopToMenu(x));
-  //We use this computers[0] to access the first value of the array and display in the page the first laptop in our API
-  laptopTitle.innerText = computers[0].title;
-  laptopPrice.innerText = computers[0].price + " 💸";
-  laptopDescription.innerText = computers[0].description;
+//#region settingLatopProperties [title, price, description]
+const setLaptopProperties = (laptop) => {
+  laptopTitle.innerText = laptop.title;
+  laptopPrice.innerText = laptop.price + " 💸";
+  laptopDescription.innerText = laptop.description;
+};
+//#endregion
 
-  const lineBreak = document.createElement("br");
-  specElement.innerHTML = computers[0].specs.join(lineBreak.outerHTML);
-
-  //With this workaroung I concatenate the first part of the url with the last part that identify the resource {image}.
-  laptopImage.setAttribute("src", "https://hickory-quilled-actress.glitch.me/" + computers[0].image);
-  // Add an event listener to handle image loading errors and loading memes instead.
+//#region setImage(), setting the image for the current laptop
+const setImage = (laptop) => {
+  laptopImage.setAttribute("src", "https://hickory-quilled-actress.glitch.me/" + laptop.image);
   laptopImage.onerror = function () {
-    console.log("Failed to load image: ", selectedLaptop.image);
-    laptopImage.setAttribute(
-      "src",
-      "http://images2.memedroid.com/images/UPLOADED54/524dde0e6668e.jpeg"
-    );
+    console.log("Failed to load image: ", laptop.image);
+    laptopImage.setAttribute("src", "http://images2.memedroid.com/images/UPLOADED54/524dde0e6668e.jpeg");
   };
 };
 //#endregion
 
-//#region featuresFunction, Laptops section: every time we change laptop in the drop box menu, it will automatically update all the data.  
+//#region addingFeatureas in the html page. We create an ul > li * {nOfItems in specs (see API, json file for the details)}
+const setSpecs = (laptop) => {
+  const specsList = document.createElement("ul");
+  specsList.style.listStyle = "none"; // Add this line to remove bullet points
+
+  laptop.specs.map((spec) => {
+    const specItem = document.createElement("li");
+    specItem.innerText = spec;
+    specsList.appendChild(specItem);
+  });
+
+  // Remove any existing specs list first
+  specElement.innerHTML = "";
+  specElement.appendChild(specsList);
+};
+//#endregion
+
+//#region addComputersToMenu
+const addComputersToMenu = (computers) => {
+  computers.forEach((laptop) => addLaptopToMenu(laptop));
+  // Set the initial laptop properties and image to the first laptop in the list (first load of the page)
+  setLaptopProperties(computers[0]);
+  setImage(computers[0]);
+  setSpecs(computers[0]);
+};
+
 computersElement.addEventListener("change", (event) => {
-  const selectedLaptop = computers.find(
-    (laptop) => laptop.title === event.target.value
-  ); 
-  //Variable we are referring to handle the changes in the drop menu => {selectedLaptop}.
-  laptopTitle.innerText = selectedLaptop.title;
-
-  //In this ways we can visualize the features (laptops section) without the comma and one below the other
-  const lineBreak = document.createElement("br");
-  specElement.innerHTML = selectedLaptop.specs.join(lineBreak.outerHTML);
-
-  laptopDescription.innerText = selectedLaptop.description;
-  laptopPrice.innerText = selectedLaptop.price + " 💸";
-  //Setting the image for the laptop
-  laptopImage.setAttribute("src", "https://hickory-quilled-actress.glitch.me/" + selectedLaptop.image);
-
-  //Add an event listener to handle image loading errors and loading a meme instead.
-  laptopImage.onerror = function () {
-    console.log("Failed to load image: ", selectedLaptop.image);
-    laptopImage.setAttribute("src", "http://images2.memedroid.com/images/UPLOADED54/524dde0e6668e.jpeg");
-  };
+  const selectedLaptop = computers.find((laptop) => laptop.title === event.target.value);
+  setLaptopProperties(selectedLaptop);
+  setImage(selectedLaptop);
+  setSpecs(selectedLaptop);
 });
 //#endregion
 
