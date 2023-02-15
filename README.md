@@ -18,6 +18,8 @@ The application provides the following features:
 
 ## Bank account
 The bank account section allows the user to borrow and repay loans. The user can click the "Get a loan" button to borrow money and the "Repay loan" button to repay the loan. The balance and loan amounts are displayed in the UI.
+If you try to repair your loan when you don't have enough money in your balance one meme will appear.
+The same will apply if try to buy a computer but you don't have enough money in your balance.
 
 ## Work
 The work section allows the user to earn money. The user can click the "Work" button to earn money and the "Bank" button to transfer the earned money to the bank account. The earned salary is displayed in the UI.
